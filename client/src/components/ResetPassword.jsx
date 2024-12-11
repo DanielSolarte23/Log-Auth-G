@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "../App.css";
+import Logo from "./Logo";
 
 const ResetPasswordForm = () => {
   const { token } = useParams();
@@ -31,40 +32,72 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Restablecer Contraseña</h1>
+    <div className="w-full h-full flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="reset-password-form border px-5 py-5 w-3/5 h-4/5 flex flex-col gap-5 rounded-lg"
+      >
+        <div className="h-[15%] flex justify-center items-center">
+          <Logo className={`2xl:w-32 w-24`} />
+        </div>
+        <h1 className="text-white font-extrabold text-2xl">
+          Restablecer Contraseña
+        </h1>
+        <div className="flex flex-col gap-5 h-[30%]">
+          <div className="h-[50%]">
+            <input
+              type="password"
+              className="w-full bg-transparent border outline-none text-xl text-white px-4 py-2 rounded-md h-[80%] placeholder:text-white shadow-xl"
+              placeholder="Nueva contraseña"
+              {...register("password", {
+                required: "La contraseña es obligatoria",
+                minLength: {
+                  value: 6,
+                  message: "Debe tener al menos 6 caracteres",
+                },
+              })}
+            />
+            {errors.password && (
+              <p className="error text-red-600">{errors.password.message}</p>
+            )}
+          </div>
 
-      <div>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          {...register("password", {
-            required: "La contraseña es obligatoria",
-            minLength: {
-              value: 6,
-              message: "Debe tener al menos 6 caracteres",
-            },
-          })}
-        />
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
+          <div className="h-[50%]">
+            <input
+              type="password"
+              className="w-full bg-transparent border outline-none text-xl text-white px-4 py-2 rounded-md h-[80%] placeholder:text-white shadow-xl"
+              placeholder="Confirmar contraseña"
+              {...register("confirmPassword", {
+                required: "La confirmación es obligatoria",
+                validate: (value) =>
+                  value === watch("password") || "Las contraseñas no coinciden",
+              })}
+            />
+            {errors.confirmPassword && (
+              <p className="error text-red-600">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+        </div>
+        <button
+          className="px-5 py-3 text-white font-bold text-xl rounded-lg bg-red-600"
+          type="submit"
+        >
+          Restablecer
+        </button>
 
-      <div>
-        <input
-          type="password"
-          placeholder="Confirmar contraseña"
-          {...register("confirmPassword", {
-            required: "La confirmación es obligatoria",
-            validate: (value) =>
-              value === watch("password") || "Las contraseñas no coinciden",
-          })}
-        />
-        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
-      </div>
-
-      <button type="submit">Restablecer</button>
-      <p>{message ? message + <Link to="/login">Iniciar Sesion</Link> : ""}</p>
-    </form>
+        <p>
+          {message && (
+            <>
+              {message}{" "}
+              {message.toLowerCase().includes("exitosamente") && (
+                <Link to="/login">Iniciar Sesión</Link>
+              )}
+            </>
+          )}
+        </p>
+      </form>{" "}
+      F
+    </div>
   );
 };
 

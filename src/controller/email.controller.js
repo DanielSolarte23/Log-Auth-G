@@ -11,7 +11,7 @@ dotenv.config();
 export const sendVerificationEmail = async (user, host) => {
   const verificationToken = crypto.randomBytes(32).toString('hex');
 
-  // Guardar el token de verificación
+
   user.verificationToken = verificationToken;
   await user.save();
 
