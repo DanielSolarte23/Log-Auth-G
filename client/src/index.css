@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body{
+    background: #202020;
+    color: white;
+} */
+
+body {
+    background-image: url(./fondo12.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    
+  }
+  
+  .images {
+    filter: drop-shadow(10px 10px 8px black);
+  }
+  
+  /* Mantener el label arriba si el input tiene contenido */
+  input:not(:placeholder-shown) + label {
+    transform: translateY(-1.5rem); /* Misma posición que peer-focus */
+  }
+  
+  .contain {
+    backdrop-filter: blur(20px);
+  }
+  
+  .title{
+    font-family: "Anton SC";
+  }
